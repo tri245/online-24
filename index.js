@@ -1,52 +1,45 @@
+require('dotenv').config();
+const express = require('express');
+const app = express();
+app.get('/', (req, res) => {
+    res.send('Self Bot Rich Presence working');
+});
+app.listen(process.env.PORT, () => {
+    console.log('Self Bot Rich Presence working on port ' + process.env.PORT);
+});
+
 const Discord = require('discord.js-selfbot-v13');
 const client = new Discord.Client({
-  readyStatus: false,
-  checkUpdate: false
+    checkUpdate: false
 });
-
-const keepAlive = require('./server.js');
-keepAlive();
-
-function formatTime() {
-  const date = new Date();
-  const options = {
-    timeZone: 'Asia/Jakarta',
-    hour12: true,
-    hour: 'numeric',
-    minute: 'numeric'
-  };
-  return new Intl.DateTimeFormat('en-US', options).format(date);
-}
 
 client.on('ready', async () => {
-  console.clear();
-  console.log(`${client.user.tag} - rich presence started!`);
 
-  const r = new Discord.RichPresence()
-    .setApplicationId('YOUR CLIENT ID DISCORD BOT')
-    .setType('STREAMING')
-    .setURL('https://www.youtube.com/watch?v=xvFZjo5PgG0')
-    .setState('w/ L RMN')
-    .setName('w/ L RMN')
-    .setDetails(`Somewhen, somewhere`)
-    .setStartTimestamp(Date.now())
-    .setAssetsLargeImage('https://cdn.discordapp.com/attachments/1109793641058287626/1111650692889849867/cat.gif')
-    .setAssetsLargeText('Hi')
-    .setAssetsSmallImage('https://cdn.discordapp.com/emojis/917227945712562207.gif?size=96&quality=lossless')
-    .setAssetsSmallText(':)')
-    .addButton(' („ᵕᴗᵕ„) ', 'https://lrmn.is-a.dev/')
-    .addButton(' ₍ᐢ._.ᐢ₎♡ ༘ ', 'https://is-a.fun/');
+    const rpc = new Discord.RichPresence()
+        .setApplicationId('1218756363551772673')
+        .setType('STREAMING')
+        .setURL(`https://www.youtube.com/watch?v=55F8bT91KG4&list=RDJ7fc0OZ85Oc&index=1`)
+        .setDetails(`Trinho`)
+        .setName(`tranhdau.net`)
+        .setState(`tranhdau.net Đừng kiếm tao`)
+        .setParty({
 
-  client.user.setActivity(r);
-  client.user.setPresence({ status: "idle" });
+            max: 5001,
+            current: 4690,
+            id: Discord.getUUID(),
+        })
+        .setAssetsLargeImage('https://media.discordapp.net/attachments/1091717501831872590/1164474654468096010/X.gif?ex=65435888&is=6530e388&hm=cf59417222aa31f32de8f7c194ab489a7f0abd6956b00d287ebc669a0eeab4ac&=')
+        .setAssetsLargeText(`Trinho`)
+        .setAssetsSmallImage(`https://media.discordapp.net/attachments/1158287251541872690/1164475866303184976/N.gif?width=30&height=30`)
+        .setAssetsSmallText(`Caylắm`)
+        .addButton(`FB`, `https://www.facebook.com/trinhohads`)
+        .addButton(`tranhdau.rac`, `http://tranhdau.net/`);
+    client.user.setActivity(rpc.toJSON());
 
-  setInterval(() => {
-    const newTime = formatTime();
-    const newDetails = `ailurophile`;
-    r.setDetails(newDetails);
-    client.user.setActivity(r);
-  }, 1000); // Update every second
+    console.log(`${client.user.tag} is ready!`);
+
 });
 
-const mySecret = process.env['TOKEN'];
-client.login(mySecret);
+
+//Account Token
+client.login(process.env.TOKEN);
